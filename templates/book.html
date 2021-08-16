@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FrontierAir</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href='/static/project.css' />
+    <link rel="stylesheet" href="/static/manage.css">
+</head>
+
+<body>
+    <h1>FrontierAir Management System</h1>
+    <h2>Edit / Book New Ticket</h2>
+    <div class="row toplevel">
+        <div class="col border">
+            <div class="row {% if edit %} border {% endif %}">
+                <h2>Flight Information</h2>
+                <div class="col bold center finfoil">
+                    <div class="row center border">
+                        <p>Flight Number</p>
+                    </div>
+                    <div class="row center border">
+                        <p>Date Time</p>
+                    </div>
+                    <div class="row center border">
+                        <p>From</p>
+                    </div>
+                    <div class="row center border">
+                        <p>To</p>
+                    </div>
+                    <div class="row center border">
+                        <p>Seat</p>
+                    </div>
+                    <div class="row center border">
+                        <p>Seat Status</p>
+                    </div>
+                    <div class="row center border">
+                        <p>Price (NT$)</p>
+                    </div>
+                    <div class="row center border">
+                        <p>Flight Key</p>
+                    </div>
+                </div>
+                <div class="col center finfoir">
+                    <div class="row center border">
+                        <p>{{ flight['flightNum'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p> {{ flight['datetime'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ flight['from'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ flight['to'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ col+1 }}:{{ row+1 }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ flight['Seats'][col][row]['status'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ flight['price'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ flight['key'] }}</p>
+                    </div>
+                </div>
+            </div>
+            {% if edit %}
+            <div class="row">
+                <h2>Seat & Passenger Information</h2>
+                <div class="col bold center finfoil">
+                    <div class="row center border">
+                        <p>Seat Number</p>
+                    </div>
+                    <div class="row center border">
+                        <p>Seat Status</p>
+                    </div>
+                    <div class="row center border">
+                        <p>First Name</p>
+                    </div>
+                    <div class="row center border">
+                        <p>Last Name</p>
+                    </div>
+                    <div class="row center border">
+                        <p>Nationality</p>
+                    </div>
+                    <div class="row center border">
+                        <p>Passport Number</p>
+                    </div>
+                </div>
+                <div class="col center finfoir">
+                    <div class="row center border">
+                        <p>{{ col+1 }}:{{row+1}}</p>
+                    </div>
+                    <div class="row center border">
+                        <p> {{ flight['Seats'][col][row]['status'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ flight['Seats'][col][row]['firstN'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ flight['Seats'][col][row]['lastN'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ flight['Seats'][col][row]['nationality'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ flight['Seats'][col][row]['passportN'] }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="col border">
+            <form action="/manage/{{flight['key']}}/seat/{{col}}/{{row}}/book" method="POST">
+                <div class="form-group">
+                    <label for="firstN">First Name</label>
+                    <input type="text" class="form-control" id="firstN" name="firstN" {% if edit %}
+                        value="{{ flight['Seats'][col][row]['firstN'] }}" {% endif %}required>
+                </div>
+                <div class="form-group">
+                    <label for="lastN">Last Name</label>
+                    <input type="text" class="form-control" id="lastN" name="lastN" {% if edit %}
+                        value="{{ flight['Seats'][col][row]['lastN'] }}" {% endif %} required>
+                </div>
+                <div class="form-group">
+                    <label for="nationality">Nationality (Number)</label>
+                    <input type="text" class="form-control" id="nationality" name="nationality" {% if edit %}
+                        value="{{ flight['Seats'][col][row]['nationality'] }}" {% endif %} required>
+                </div>
+                <div class="form-group">
+                    <label for="passportN">Passport Number</label>
+                    <input type="text" class="form-control" id="passportN" name="passportN" {% if edit %}
+                        value="{{ flight['Seats'][col][row]['passportN'] }}" {% endif %} required>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="paid" id="checkBox">
+                    <label class="form-check-label" for="checkBox" required>Customer Paid Full Fee ({{
+                        flight['price']
+                        }})</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

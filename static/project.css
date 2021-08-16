@@ -1,0 +1,45 @@
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/source-sans-pro-v14-latin-regular.eot');
+    src: local(''),
+        url('./fonts/source-sans-pro-v14-latin-regular.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/source-sans-pro-v14-latin-regular.woff2') format('woff2'),
+        url('./fonts/source-sans-pro-v14-latin-regular.woff') format('woff'),
+        url('./fonts/source-sans-pro-v14-latin-regular.ttf') format('truetype'),
+        url('./fonts/source-sans-pro-v14-latin-regular.svg#SourceSansPro') format('svg');
+}
+
+body {
+    font-family: "Source Sans Pro" !important;
+    margin: 15px;
+}
+
+.flex-container {
+    display: flex;
+    width: 400px;
+    margin-top: 15px;
+}
+
+.flex-child {
+    flex: 1;
+    margin: auto;
+}
+
+.flex-child:first-child {
+    margin-right: 20px;
+}
+
+.flex-child select,
+.flex-child input {
+    width: 250px;
+}
+
+.flex-child label {
+    margin: auto;
+}
+
+.Cancelled {
+    color: #f00;
+}

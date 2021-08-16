@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FrontierAir</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href='/static/project.css' />
+    <link rel="stylesheet" href="/static/manage.css">
+</head>
+
+<body>
+    <h1>FrontierAir Management System</h1>
+    <h2>Manage Flight</h2>
+    <div class="row toplevel">
+        <div class="col">
+            <div class="row border">
+                <h2>Flight Information</h2>
+                <div class="col bold center finfoil">
+                    <div class="row center border">
+                        <p>Flight Number</p>
+                    </div>
+                    <div class="row center border">
+                        <p>Date Time</p>
+                    </div>
+                    <div class="row center border">
+                        <p>From</p>
+                    </div>
+                    <div class="row center border">
+                        <p>To</p>
+                    </div>
+                    <div class="row center border">
+                        <p>Status</p>
+                    </div>
+                    <div class="row center border">
+                        <p>Price (NT$)</p>
+                    </div>
+                    <div class="row center border">
+                        <p>Flight Key</p>
+                    </div>
+                </div>
+                <div class="col center finfoir">
+                    <div class="row center border">
+                        <p>{{ flight['flightNum'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p> {{ flight['datetime'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ flight['from'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ flight['to'] }}</p>
+                    </div>
+                    <div class="row center border {{flight['status']}}">
+                        <p>{{ flight['status'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ flight['price'] }}</p>
+                    </div>
+                    <div class="row center border">
+                        <p>{{ flight['key'] }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row border">
+                <h2>Change Status</h2>
+                <form action="/manage/{{flight['key']}}/cstatus" method="post">
+                    <select id="statusSel" name="status" class="form-control">
+                        <option value="Ticketing">Ticketing</option>
+                        <option value="Boarding">Boarding</option>
+                        <option value="Departed">Departed</option>
+                        <option value="Cancelled">Cancel Flight</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                </form>
+            </div>
+        </div>
+        <div class="col border">
+            <h2>Seats</h2>
+            <div class="row">
+                <div class="col" style="text-align:right;">
+                    <table style="margin-left: 100px;">
+                        <tbody>
+                            {% for i in range(flight['rowNum'] + 1) %}
+                            <tr>
+                                {% for j in range(flight['colNum'] + 1) %}
+                                <td>
+                                    {% if i == 0 and j != 0 %}
+                                    <p class="top">{{ j }}</p>
+                                    {% elif j == 0 and i != 0 %}
+                                    <p class="left">{{ i }}</p>
+                                    {% elif j!=0 and i!=0 %}
+                                    <a href="/manage/{{flight['key']}}/seat/{{j-1}}/{{i-1}}"><button
+                                            class="btn {{flight['Seats'][j-1][i-1]['status']}}">-</button></a>
+                                    {% endif %}
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col" style="border: 1px solid black; margin:50px">
+                    <div style="width:30px;color:blue; background-color:blue; margin-top: 10px;">.</div>
+                    Available
+                    <div style="width:30px;color:gray; background-color:gray; margin-top: 10px;">.</div>
+                    Booked
+                    <div style="width:30px;color:lightgreen; background-color:lightgreen; margin-top: 10px;">.</div>
+                    Checked In
+                </div>
+            </div>
+        </div>
+    </div>
+    <form action="/" method="GET">
+        <button style="width:100%;" type="submit" class="btn btn-primary">Back To All Flights</button>
+    </form>
+    <form action="/manage/{{ flight['key'] }}/delete" method="GET">
+        <button style="width:100%;" type="submit" class="btn btn-danger">Delete this Flight (DANGER)</button>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+body {
+    text-align: center;
+}
+
+h1, h2, div.buttons {
+    text-align: left;
+}
+
+.row.title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+a.flightNum {
+    width: 100%;
+}
+
+.row .col {
+    border: 1px solid black;
+}

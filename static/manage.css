@@ -1,0 +1,58 @@
+.border {
+    border: 1px solid black !important;
+}
+
+.row.toplevel {
+    margin-top: 20px;
+}
+
+button {
+    margin: 10px 0;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.center {
+    text-align: center;
+}
+
+.row.center.border p {
+    margin-bottom: 0;
+}
+
+.finfoil {
+    margin: 10px 10px;
+    margin-right: 0;
+}
+.finfoir {
+    margin: 10px 10px;
+    margin-left: 0;
+}
+
+td>p {
+    text-align: center;
+}
+td>p.top {
+    margin-bottom: 0;
+}
+td>p.left {
+    margin-right: 5px;
+    margin-top: 15px;
+}
+
+.btn.Available {
+    background-color: var(--bs-blue);
+    color: var(--bs-blue);
+}
+
+.btn.Booked {
+    background-color: var(--bs-gray);
+    color: var(--bs-gray);
+}
+
+.btn.Checked_In {
+    background-color: lightgreen;
+    color: lightgreen;
+}
