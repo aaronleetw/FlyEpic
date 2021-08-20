@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, redirect
+from flask import *
 import pyrebase
 from datetime import *
 import pytz
+from flask_qrcode import QRcode
 
 app = Flask(__name__, static_url_path='/static')
+QRcode(app)
 firebaseConfig = {
     'apiKey': "AIzaSyB3-ixZ8hoB_1nJx5NKp1wZOacnp188K8w",
     'authDomain': "flask-pos.firebaseapp.com",
@@ -17,7 +19,7 @@ firebaseConfig = {
 
 firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
-tz = pytz.timezone('America/Los_Angeles')
+tz = pytz.timezone('Asia/Taipei')
 
 
 def sortby_deptTime(data, cmd):
@@ -47,8 +49,10 @@ def sortby_deptTime(data, cmd):
 
 
 def later_than_now(x):
-    t = datetime.now(tz)
-    return t.replace(year=int(x['year']), month=int(x['month']), day=int(x['day']), hour=int(x['hour']), minute=int(x['minute']), second=0, microsecond=0, tzinfo=tz) >= datetime.now(tz)
+    now = datetime.now(tz)
+    xT = datetime(int(x['year']), int(x['month']), int(x['day']),
+                  int(x['hour']), int(x['minute']), 0, 0, tzinfo=tz)
+    return (xT >= now)
 
 
 @ app.route('/', methods=['GET'])
@@ -155,7 +159,7 @@ def bookseat(id, col, row):
                 col).child(row).child('passportN').set(request.form['passportN'])
             db.child("Flights").child(id).child('Seats').child(
                 col).child(row).child('status').set('Booked')
-            return redirect('/manage/'+id)
+            return redirect('/manage/'+id+'/seat/'+col+"/"+row)
     except:
         return "DID-NOT-PAY"
 
@@ -186,5 +190,10 @@ def checkin(id, col, row):
     return redirect('/manage/'+id)
 
 
+@app.route('/scan')
+def scan():
+    return send_from_directory('templates', 'scan.html')
+
+
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=80)
+    app.run(debug=True, host="0.0.0.0", port=80, ssl_context='adhoc')

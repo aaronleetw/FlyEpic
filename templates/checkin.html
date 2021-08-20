@@ -102,13 +102,15 @@
                 {% endif %}
             </div>
         </div>
-        {% if not checked %}
         <div class="col border">
+            <img src="{{ qrcode(flight['key']~'/seat/'~col~'/'~row, box_size=50) }}" class="displayGenQrcode center"
+                alt="">
+            {% if not checked %}
             <form action="/manage/{{flight['key']}}/seat/{{col}}/{{row}}/check_in" method="GET">
                 <button style="width:100%;" type="submit" class="btn btn-primary">Checked Passport, Check In</button>
             </form>
+            {% endif %}
         </div>
-        {% endif %}
     </div>
 </body>
 
