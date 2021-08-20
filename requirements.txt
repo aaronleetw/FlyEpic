@@ -3,9 +3,13 @@
 # FrontierAir/app.py: 1
 Flask == 2.0.1
 
+# FrontierAir/app.py: 5
+Flask_QRcode == 3.0.0
+
 # FrontierAir/app.py: 2
 Pyrebase == 3.0.27
 
 # FrontierAir/app.py: 4
 pytz == 2020.1
+
 gunicorn == 20.1.0
