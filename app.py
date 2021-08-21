@@ -55,7 +55,7 @@ def later_than_now(x):
     return (xT >= now)
 
 
-@ app.route('/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def root():
     data = db.child("Flights").get()
     if data.val() == None:
@@ -64,7 +64,7 @@ def root():
     return render_template('selflight.html', flights=data)
 
 
-@ app.route('/filter/<fmethod>', methods=['GET'])
+@app.route('/filter/<fmethod>', methods=['GET'])
 def filterpg(fmethod):
     data = db.child("Flights").get()
     if data is None:
@@ -85,7 +85,7 @@ def filterpg(fmethod):
     return render_template('selflight.html', flights=data)
 
 
-@ app.route('/add', methods=['GET', 'POST'])
+@app.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'GET':
         return render_template('addflight.html', now=datetime.now(tz))
@@ -105,7 +105,7 @@ def add():
         return "ERROR"
 
 
-@ app.route('/manage/<id>', methods=['GET'])
+@app.route('/manage/<id>', methods=['GET'])
 def manage(id):
     data = db.child("Flights").child(id).get().val()
     data['rowNum'] = int(data['rowNum'])
@@ -114,20 +114,20 @@ def manage(id):
     return render_template('manage.html', flight=data)
 
 
-@ app.route('/manage/<id>/delete', methods=['GET'])
+@app.route('/manage/<id>/delete', methods=['GET'])
 def delflight(id):
     db.child("Flights").child(id).remove()
     return redirect('/')
 
 
-@ app.route('/manage/<id>/cstatus', methods=['POST'])
+@app.route('/manage/<id>/cstatus', methods=['POST'])
 def cstatus(id):
     db.child("Flights").child(id).child(
         'status').set(request.form['status'])
     return redirect('/manage/'+id)
 
 
-@ app.route('/manage/<id>/seat/<col>/<row>', methods=['GET'])
+@app.route('/manage/<id>/seat/<col>/<row>', methods=['GET'])
 def manageseat(id, col, row):
     col = int(col)
     row = int(row)
@@ -143,7 +143,7 @@ def manageseat(id, col, row):
         return "ERROR"
 
 
-@ app.route('/manage/<id>/seat/<col>/<row>/book', methods=['POST'])
+@app.route('/manage/<id>/seat/<col>/<row>/book', methods=['POST'])
 def bookseat(id, col, row):
     col = int(col)
     row = int(row)
@@ -159,9 +159,9 @@ def bookseat(id, col, row):
                 col).child(row).child('passportN').set(request.form['passportN'])
             db.child("Flights").child(id).child('Seats').child(
                 col).child(row).child('status').set('Booked')
-            return redirect('/manage/'+id+'/seat/'+col+"/"+row)
+            return redirect('/manage/'+str(id)+'/seat/'+str(col)+"/"+str(row))
     except:
-        return "DID-NOT-PAY"
+        return "DID NOT PAY"
 
 
 @app.route('/manage/<id>/seat/<col>/<row>/edit', methods=['GET'])
