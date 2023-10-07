@@ -2,29 +2,30 @@
 <html>
 
 <head>
-    <title>FrontierAir</title>
+    <title>FlyEpic Management</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href='/static/project.css' />
     <link rel="stylesheet" href="/static/selplane.css">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
 </head>
 
 <body>
-    <h1>FrontierAir Management System</h1>
-    <h2>Select Flight</h2>
+    <a href="/"><img class="mb-3" style="max-width: 400px;" src="/static/FlyEpic.png" alt=""></a>
+    <h1>Select Flight</h1>
     <div class="buttons">
         <a href="/add"> <button style="margin-top: 10px" class="btn btn-secondary">Add New Flight</button></a>
-        <a href="/"> <button style="margin-top: 10px" class="btn btn-primary">Cancel All Filters</button></a>
-        <a href="/filter/all"> <button style="margin-top: 10px" class="btn btn-primary">Show All Flights</button></a>
-        <a href="/filter/today"> <button style="margin-top: 10px" class="btn btn-primary">Today</button></a>
-        <a href="/filter/ticketing"><button style="margin-top: 10px" class="btn btn-primary">Ticketing</button></a>
-        <a href="/filter/boarding"><button style="margin-top: 10px" class="btn btn-primary">Boarding</button></a>
-        <a href="/filter/departed"><button style="margin-top: 10px" class="btn btn-primary">Departed</button></a>
-        <a href="/scan"><button style="margin-top: 10px" class="btn btn-primary">Scan To Board</button></a>
+        <a href="/"> <button style="margin-top: 10px" class="btn btn-primary">Upcoming Flights</button></a>
+        <a href="/filter/all"> <button style="margin-top: 10px" class="btn btn-primary">Historic Flights</button></a>
+        <a href="/filter/today"> <button style="margin-top: 10px" class="btn btn-primary">All Flights Today</button></a>
+        <a href="/filter/ticketing"><button style="margin-top: 10px" class="btn btn-info">Ticketing</button></a>
+        <a href="/filter/boarding"><button style="margin-top: 10px" class="btn btn-info">Boarding</button></a>
+        <a href="/filter/departed"><button style="margin-top: 10px" class="btn btn-info">Departed</button></a>
+        <a href="/scan"><button style="margin-top: 10px" class="btn btn-dark">Scan To Board</button></a>
     </div>
     <br>
     <div class="col">
         <div class="row title">
-            <div class="col">Flight Number</div>
+            <div class="col col-2">Flight Number</div>
             <div class="col">Dept. Time</div>
             <div class="col">From</div>
             <div class="col">To</div>
@@ -33,7 +34,7 @@
         {% if flights != None %}
         {% for f in flights %}
         <div class="row">
-            <div class="col">
+            <div class="col col-2">
                 <a href="/manage/{{f['key']}}">{{f['flightNum']}}</a>
             </div>
             <div class="col">{{ f['datetime'] }}</div>

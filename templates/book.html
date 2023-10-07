@@ -2,17 +2,21 @@
 <html>
 
 <head>
-    <title>FrontierAir</title>
+    <title>FlyEpic Management</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href='/static/project.css' />
     <link rel="stylesheet" href="/static/manage.css">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
 </head>
 
 <body>
-    <h1>FrontierAir Management System</h1>
-    <h2>Edit / Book New Ticket</h2>
+    <div>
+        <a href="/"><img class="mb-3" style="max-width: 400px;" src="/static/FlyEpic.png" alt=""></a>
+    </div>
+    <a href="/manage/{{ flight['key'] }}"><button type="button" class="btn btn-outline-secondary btn-sm">&lt; Return</button></a>
+    <h1>Edit / Book New Ticket</h1>
     <div class="row toplevel">
-        <div class="col border">
+        <div class="col-lg border">
             <div class="row {% if edit %} border {% endif %}">
                 <h2>Flight Information</h2>
                 <div class="col bold center finfoil">
@@ -55,7 +59,7 @@
                         <p>{{ flight['to'] }}</p>
                     </div>
                     <div class="row center border">
-                        <p>{{ col+1 }}:{{ row+1 }}</p>
+                        <p>{{ row+1 }}{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[col] }}</p>
                     </div>
                     <div class="row center border">
                         <p>{{ flight['Seats'][col][row]['status'] }}</p>
@@ -93,7 +97,7 @@
                 </div>
                 <div class="col center finfoir">
                     <div class="row center border">
-                        <p>{{ col+1 }}:{{row+1}}</p>
+                        <p>{{ row+1 }}{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[col] }}</p>
                     </div>
                     <div class="row center border">
                         <p> {{ flight['Seats'][col][row]['status'] }}</p>
@@ -114,7 +118,7 @@
             </div>
             {% endif %}
         </div>
-        <div class="col border">
+        <div class="col-lg border">
             <form action="/manage/{{flight['key']}}/seat/{{col}}/{{row}}/book" method="POST">
                 <div class="form-group">
                     <label for="firstN">First Name</label>
@@ -127,7 +131,7 @@
                         value="{{ flight['Seats'][col][row]['lastN'] }}" {% endif %} required>
                 </div>
                 <div class="form-group">
-                    <label for="nationality">Nationality (Number)</label>
+                    <label for="nationality">Nationality</label>
                     <input type="text" class="form-control" id="nationality" name="nationality" {% if edit %}
                         value="{{ flight['Seats'][col][row]['nationality'] }}" {% endif %} required>
                 </div>
@@ -138,9 +142,7 @@
                 </div>
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" name="paid" id="checkBox">
-                    <label class="form-check-label" for="checkBox" required>Customer Paid Full Fee ({{
-                        flight['price']
-                        }})</label>
+                    <label class="form-check-label" for="checkBox" required>Say: Your ticket for Flight {{ flight['flightNum'] }} at {{ flight['datetime'] }} from {{ flight['from']}} to {{ flight['to']}} comes to {{ flight['price'] }} per ticket. You are a party of __, so the total comes to __. How would you like to pay today?</label>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

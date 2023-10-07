@@ -3,23 +3,27 @@ import pyrebase
 from datetime import *
 import pytz
 from flask_qrcode import QRcode
+from dotenv import load_dotenv
+from os import getenv
+
+load_dotenv()
 
 app = Flask(__name__, static_url_path='/static')
 QRcode(app)
 firebaseConfig = {
-    'apiKey': "AIzaSyB3-ixZ8hoB_1nJx5NKp1wZOacnp188K8w",
-    'authDomain': "flask-pos.firebaseapp.com",
-    'databaseURL': "https://flask-pos-default-rtdb.firebaseio.com",
-    'projectId': "flask-pos",
-    'storageBucket': "flask-pos.appspot.com",
-    'messagingSenderId': "67044427430",
-    'appId': "1:67044427430:web:52acbe89934ac7822e9667",
-    'measurementId': "G-W3T263FLRN"
+    'apiKey': getenv('apiKey'),
+    'authDomain': getenv('authDomain'),
+    'databaseURL': getenv('databaseURL'),
+    'projectId': getenv('projectId'),
+    'storageBucket': getenv('storageBucket'),
+    'messagingSenderId': getenv('messagingSenderId'),
+    'appId': getenv('appId'),
+    'measurementId': getenv('measurementId')
 }
 
 firebase = pyrebase.initialize_app(firebaseConfig)
 db = firebase.database()
-tz = pytz.timezone('Asia/Taipei')
+tz = pytz.timezone(getenv('timezone'))
 
 
 def sortby_deptTime(data, cmd):
@@ -122,8 +126,9 @@ def delflight(id):
 
 @app.route('/manage/<id>/cstatus', methods=['POST'])
 def cstatus(id):
+    data = request.get_json(force=True)
     db.child("Flights").child(id).child(
-        'status').set(request.form['status'])
+        'status').set(data['status'])
     return redirect('/manage/'+id)
 
 
@@ -196,4 +201,4 @@ def scan():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=80, ssl_context='adhoc')
+    app.run(debug=True, host="0.0.0.0", port=443, ssl_context='adhoc')

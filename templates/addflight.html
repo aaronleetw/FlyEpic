@@ -2,14 +2,18 @@
 <html>
 
 <head>
-    <title>FrontierAir</title>
+    <title>FlyEpic Management</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href='/static/project.css' />
+    <link rel="icon" type="image/png" href="/static/favicon.png">
 </head>
 
 <body>
-    <h1>FrontierAir Management System</h1>
-    <h2>Add New Flight</h2>
+    <div>
+        <a href="/"><img class="mb-3" style="max-width: 400px;" src="/static/FlyEpic.png" alt=""></a>
+    </div>
+    <a href="/"><button type="button" class="btn btn-outline-secondary btn-sm">&lt; Return</button></a>
+    <h1>Add New Flight</h1>
     <form action="add" method="POST">
         <div class="form-group">
             <label for="flightNum">Flight Number</label>
